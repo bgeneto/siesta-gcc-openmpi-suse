@@ -6,13 +6,13 @@ To achieve a parallel build of SIESTA you should ﬁrst determine which type of 
 
 ## 1. Install prerequisite software
 
-*Note: We assume you are running the commands below as `root` or doing something like `sudo su`.*
+*Note: We assume you are running all the commands below as an ordinary (non-root) user, so we use `sudo` only when required. 
 
 ```
-zypper install gcc-c++ gcc-fortran openmpi openmpi-devel 
+sudo zypper install gcc-c++ gcc-fortran openmpi openmpi-devel 
 ```
 
-Unfortunetely, for SUSE, the openmpi installation does not work out of the box, you need to set PATH and LD_LIBRARY_PATH env vars. We recommend you add these lines to a file in your profile.d directory, say `/etc/profile.d/openmpi.sh` so that variables are set correctly for all sessions. 
+Unfortunetely, for SUSE, the openmpi installation does not work out of the box, you need to set PATH and LD_LIBRARY_PATH env vars. We recommend you add these lines to a file in your profile.d directory, say `/etc/profile.d/openmpi.sh` so that variables are set correctly for all sessions (see [Section 6](https://github.com/bgeneto/siesta4.1-gnu-openmpi-suse/blob/master/README.md#5-test-siesta)). 
 
 ```
 openmpipath=/usr/lib64/mpi/gcc/openmpi
@@ -30,9 +30,9 @@ echo $(mpicxx -showme:compile | awk '{ print $1}' | sed 's/-I//; s/\/include//')
 ## 2. Create required installation folders
 
 ```
-SIESTA_DIR=/opt/siesta
-OPENBLAS_DIR=/opt/openblas
-SCALAPACK_DIR=/opt/scalapack 
+SIESTA_DIR=$HOME/siesta
+OPENBLAS_DIR=$HOME/openblas
+SCALAPACK_DIR=$HOME/scalapack
 
 mkdir $SIESTA_DIR $OPENBLAS_DIR $SCALAPACK_DIR
 ```
@@ -113,41 +113,28 @@ cd $SIESTA_DIR/siesta-4.1-b3/ObjMPI
 sh ../Src/obj_setup.sh
 make OBJDIR=ObjMPI
 ```
+## 5. Test siesta
 
-## 5. Revert to default directory ownership and permission 
-
-Just in case...
-
-```
-chown -R root:root $SIESTA_DIR $OPENBLAS_DIR $SCALAPACK_DIR
-find $SIESTA_DIR $OPENBLAS_DIR $SCALAPACK_DIR \( -type d -exec chmod 755 {} \; -o -type f -exec chmod 755 {} \; \)
-```
-
-## 6. Test siesta
-
-`exit` sudo, i.e., return to your normal user. 
-Now let's copy siesta `Test` directory to our home (where we have all necessary permissions): 
-
-```
-mkdir $HOME/siesta
-sudo cp -rp $SIESTA_DIR/siesta-4.1-b3/Tests/ $HOME/siesta/Tests
-```
-
-Now create a symbolic link to siesta executable 
-
-```
-cd $HOME/siesta
-ln -s $SIESTA_DIR/siesta-4.1-b3/ObjMPI/siesta
-```
-
-Finally run some test job:
+Choose some job to test, e.g.: 
 
 ```
 cd $HOME/siesta/Tests/h2o_dos/
 make
 ```
 
-We should see the following message:
+We should see the following message at the end:
+
 ```
 ===> SIESTA finished successfully
+```
+
+## 6. Make siesta available for all users
+
+If you want to make siesta available to all users you can move the required directories to another location, say `/opt`, and set the required environmental variables system wide:
+
+```
+sudo mv -t /opt $SIESTA_DIR $OPENBLAS_DIR $SCALAPACK_DIR 
+echo "export PATH=$PATH:$openmpi/bin" | sudo tee --append /etc/profile.d/openmpi.sh > /dev/null
+echo "export export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$openmpipath/lib64" | sudo tee --append /etc/profile.d/openmpi.sh > /dev/null
+echo "export CPATH=$CPATH:$openmpipath/include" | sudo tee --append /etc/profile.d/openmpi.sh > /dev/null
 ```
