@@ -12,7 +12,7 @@ To achieve a parallel build of SIESTA you should ﬁrst determine which type of 
 sudo zypper install gcc-c++ gcc-fortran openmpi openmpi-devel 
 ```
 
-Unfortunetely, for SUSE, the openmpi installation does not work out of the box, you need to set PATH and LD_LIBRARY_PATH env vars. We recommend you add these lines to a file in your profile.d directory, say `/etc/profile.d/openmpi.sh` so that variables are set correctly for all sessions (see [Section 6](https://github.com/bgeneto/siesta4.1-gnu-openmpi-suse/blob/master/README.md#5-test-siesta)). 
+Unfortunetely, for SUSE, the openmpi installation does not work out of the box, you need to set PATH and LD_LIBRARY_PATH env vars. We recommend you add these lines to a file in your profile.d directory, say `/etc/profile.d/openmpi.sh` so that variables are set correctly for all sessions (see [Section 6](https://github.com/bgeneto/siesta4.1-gnu-openmpi-suse/blob/master/README.md#6-make-siesta-available-for-all-users)). 
 
 ```
 openmpipath=/usr/lib64/mpi/gcc/openmpi
