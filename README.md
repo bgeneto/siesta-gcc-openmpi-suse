@@ -88,6 +88,7 @@ wget https://github.com/ElectronicStructureLibrary/flook/releases/download/v0.7.
 Install netcdf dependency (be patient):
 
 ```
+cd ./siesta-4.1-b3/Docs
 wget https://zlib.net/zlib-1.2.11.tar.gz
 wget https://support.hdfgroup.org/ftp/HDF5/releases/hdf5-1.8/hdf5-1.8.18/src/hdf5-1.8.18.tar.bz2
 wget -O netcdf-c-4.4.1.1.tar.gz https://github.com/Unidata/netcdf-c/archive/v4.4.1.1.tar.gz
