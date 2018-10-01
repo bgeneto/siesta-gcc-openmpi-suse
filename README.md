@@ -80,7 +80,7 @@ tar xzf ./siesta-4.1-b3.tar.gz && rm ./siesta-4.1-b3.tar.gz
 #### 4.1. Install siesta library dependencies from source
 
 ```
-cd ./siesta-4.1-b3/Docs
+cd $SIESTA_DIR/siesta-4.1-b3/Docs
 wget https://github.com/ElectronicStructureLibrary/flook/releases/download/v0.7.0/flook-0.7.0.tar.gz
 (./install_flook.bash 2>&1) | tee install_flook.log
 ```
@@ -88,7 +88,7 @@ wget https://github.com/ElectronicStructureLibrary/flook/releases/download/v0.7.
 Install netcdf dependency (be patient):
 
 ```
-cd ./siesta-4.1-b3/Docs
+cd $SIESTA_DIR/siesta-4.1-b3/Docs
 wget https://zlib.net/zlib-1.2.11.tar.gz
 wget https://support.hdfgroup.org/ftp/HDF5/releases/hdf5-1.8/hdf5-1.8.18/src/hdf5-1.8.18.tar.bz2
 wget -O netcdf-c-4.4.1.1.tar.gz https://github.com/Unidata/netcdf-c/archive/v4.4.1.1.tar.gz
