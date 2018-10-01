@@ -100,19 +100,17 @@ If anything goes wrong in this step you can check the `install_netcdf4.log` log 
 
 #### 4.2. Create your custom 'arch.make' file for GCC + MPI build 
 
-First create a custom target arch directory:
-
 ```
-mkdir $SIESTA_DIR/siesta-4.1-b3/ObjMPI && cd $SIESTA_DIR/siesta-4.1-b3/ObjMPI
+cd $SIESTA_DIR/siesta-4.1-b3/Obj
 wget -O arch.make https://raw.githubusercontent.com/bgeneto/siesta4.1-gnu-openmpi/master/gnu-openmpi-arch.make
 ```
 
 #### 4.3. Build siesta executable 
 
 ```
-cd $SIESTA_DIR/siesta-4.1-b3/ObjMPI
+cd $SIESTA_DIR/siesta-4.1-b3/Obj
 sh ../Src/obj_setup.sh
-make OBJDIR=ObjMPI
+make OBJDIR=Obj
 ```
 ## 5. Test siesta
 
