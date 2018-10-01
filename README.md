@@ -6,7 +6,7 @@ To achieve a parallel build of SIESTA you should ﬁrst determine which type of 
 
 ## 1. Install prerequisite software
 
-*Note: We assume you are running all the commands below as an ordinary (non-root) user, so we use `sudo` only when required. 
+*Note: We assume you are running all the commands below as an ordinary (non-root) user, so we use `sudo` when required. 
 
 ```
 sudo zypper install gcc-c++ gcc-fortran openmpi openmpi-devel readline-devel
@@ -30,11 +30,13 @@ echo $(mpicxx -showme:compile | awk '{ print $1}' | sed 's/-I//; s/\/include//')
 ## 2. Create required installation folders
 
 ```
-SIESTA_DIR=$HOME/siesta
-OPENBLAS_DIR=$HOME/openblas
-SCALAPACK_DIR=$HOME/scalapack
+SIESTA_DIR=/opt/siesta
+OPENBLAS_DIR=/opt/openblas
+SCALAPACK_DIR=/opt/scalapack
 
-mkdir $SIESTA_DIR $OPENBLAS_DIR $SCALAPACK_DIR
+sudo mkdir $SIESTA_DIR $OPENBLAS_DIR $SCALAPACK_DIR
+# temporally loose permissions
+sudo chmod -R 777 $SIESTA_DIR $OPENBLAS_DIR $SCALAPACK_DIR
 ```
 
 ## 3. Install prerequisite libraries 
@@ -117,7 +119,10 @@ make OBJDIR=Obj
 Choose some job to test, e.g.: 
 
 ```
-cd $SIESTA_DIR/siesta-4.1-b3/Tests/h2o_dos/
+
+cd $SIESTA_DIR/siesta-4.1-b3
+ln -s ./Obj/siesta
+cd ./Tests/h2o_dos/
 make
 ```
 
@@ -132,7 +137,7 @@ We should see the following message at the end:
 If you want to make siesta available to all users you can move the required directories to another location, say `/opt`, and set the required environmental variables system wide:
 
 ```
-sudo mv -t /opt $SIESTA_DIR $OPENBLAS_DIR $SCALAPACK_DIR 
+sudo cp -r $SIESTA_DIR $OPENBLAS_DIR $SCALAPACK_DIR /opt/
 echo "export PATH=$PATH:$openmpi/bin" | sudo tee --append /etc/profile.d/openmpi.sh > /dev/null
 echo "export export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$openmpipath/lib64" | sudo tee --append /etc/profile.d/openmpi.sh > /dev/null
 echo "export CPATH=$CPATH:$openmpipath/include" | sudo tee --append /etc/profile.d/openmpi.sh > /dev/null
