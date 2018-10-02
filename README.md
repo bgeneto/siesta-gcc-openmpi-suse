@@ -111,6 +111,7 @@ wget -O arch.make https://raw.githubusercontent.com/bgeneto/siesta-gcc-openmpi/m
 ```
 cd $SIESTA_DIR/siesta-4.1-b3/Obj
 sh ../Src/obj_setup.sh
+sudo ln -s $SIESTA_DIR/siesta-4.1-b3/Docs/build/netcdf/4.4.1.1/lib64 $SIESTA_DIR/siesta-4.1-b3/Docs/build/netcdf/4.4.1.1/lib
 make OBJDIR=Obj
 ```
 
