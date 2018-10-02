@@ -63,13 +63,12 @@ make PREFIX=$OPENBLAS_DIR LIBNAMESUFFIX=nonthreaded install
 cd $SCALAPACK_DIR
 wget http://www.netlib.org/scalapack/scalapack_installer.tgz
 tar xzf ./scalapack_installer.tgz && cd ./scalapack_installer
-./setup.py --prefix $SCALAPACK_DIR --blaslib=$OPENBLAS_DIR/lib/libopenblas.a \
-  --lapacklib=$OPENBLAS_DIR/lib/libopenblas.a --mpibindir=$openmpipath/bin \
+./setup.py --prefix $SCALAPACK_DIR --blaslib=$OPENBLAS_DIR/lib/libopenblas_nonthreaded.a \
+  --lapacklib=$OPENBLAS_DIR/lib/libopenblas_nonthreaded.a --mpibindir=$openmpipath/bin \
   --mpiincdir=$openmpipath/include
 ```
 
 *Note: Answer 'b' if asked: 'Which BLAS library do you want to use ?'*
-
 
 ## 4. Install siesta from source
 
