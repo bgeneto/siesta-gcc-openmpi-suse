@@ -12,21 +12,6 @@ To achieve a parallel build of SIESTA you should ﬁrst determine which type of 
 sudo zypper install gcc-c++ gcc-fortran openmpi openmpi-devel readline-devel libxslt-tools
 ```
 
-Unfortunetely, for SUSE, the openmpi installation does not work out of the box, you need to set PATH and LD_LIBRARY_PATH env vars. We recommend you add these lines to a file in your profile.d directory, say `/etc/profile.d/openmpi.sh` so that variables are set correctly for all sessions (see [Section 7](https://github.com/bgeneto/siesta-gcc-openmpi-suse/blob/master/README.md#7-make-siesta-available-for-all-users)). 
-
-```
-openmpipath=/usr/lib64/mpi/gcc/openmpi
-export PATH=$PATH:$openmpipath/bin
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$openmpipath/lib64
-export CPATH=$CPATH:$openmpipath/include
-```
-
-You can check your current openmpi path on SUSE with the command below: 
-
-```
-echo $(mpicxx -showme:compile | awk '{ print $1}' | sed 's/-I//; s/\/include//')
-```
-
 ## 2. Create required installation folders
 
 ```
@@ -38,6 +23,24 @@ sudo mkdir $SIESTA_DIR $OPENBLAS_DIR $SCALAPACK_DIR
 # temporally loose permissions
 sudo chmod -R 777 $SIESTA_DIR $OPENBLAS_DIR $SCALAPACK_DIR
 ```
+
+## 3. Setup OpenMPI 
+
+Unfortunetely, for SUSE, the openmpi installation does not work out of the box, you need to set PATH and LD_LIBRARY_PATH env vars. We recommend you add these lines to a file in your profile.d directory, say `/etc/profile.d/openmpi.sh` so that variables are set correctly for all sessions (see [Section 8](https://github.com/bgeneto/siesta-gcc-openmpi-suse/blob/master/README.md#8-make-siesta-available-for-all-users)). 
+
+```
+openmpipath=/usr/lib64/mpi/gcc/openmpi
+export PATH=$PATH:$openmpipath/bin
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$openmpipath/lib64:$OPENBLAS_DIR/lib
+export CPATH=$CPATH:$openmpipath/include
+```
+
+You can check your current openmpi path on SUSE with the command below: 
+
+```
+echo $(mpicxx -showme:compile | awk '{ print $1}' | sed 's/-I//; s/\/include//')
+```
+
 
 ## 3. Install prerequisite libraries 
 
@@ -128,8 +131,8 @@ Let's copy siesta `Test` directory to our home (where we have all necessary perm
 
 ```
 SIESTA_DIR=/opt/siesta
-mkdir $HOME/siesta/
-sudo cp -rp $SIESTA_DIR/siesta-4.1-b3/Tests/ $HOME/siesta/Tests/
+mkdir $HOME/siesta
+rsync -a $SIESTA_DIR/siesta-4.1-b3/Tests/ $HOME/siesta/Tests/
 ```
 
 Now create a symbolic link to siesta executable 
@@ -152,16 +155,16 @@ We should see the following message at the end:
 ===> SIESTA finished successfully
 ```
 
-## 7. Make siesta available for all users
+## 8. Make siesta available for all users
 
 If you want to make siesta available to all users you can move the required directories to another location, say `/opt`, and set the required environmental variables system wide:
 
 ```
 echo "export PATH=\$PATH:$openmpi/bin" | sudo tee --append /etc/profile.d/openmpi.sh > /dev/null
-echo "export export LD_LIBRARY_PATH=\$LD_LIBRARY_PATH:$openmpipath/lib64" | sudo tee --append /etc/profile.d/openmpi.sh > /dev/null
+echo "export export LD_LIBRARY_PATH=\$LD_LIBRARY_PATH:$openmpipath/lib64:$OPENBLAS_DIR/lib" | sudo tee --append /etc/profile.d/openmpi.sh > /dev/null
 echo "export CPATH=\$CPATH:$openmpipath/include" | sudo tee --append /etc/profile.d/openmpi.sh > /dev/null
 ```
 
-## 8. Learning to use siesta
+## 9. Learning to use siesta
 
 Read the [manual](https://siesta-project.github.io/bsc2017/siesta-4.1.pdf).
