@@ -100,11 +100,11 @@ wget -O netcdf-fortran-4.4.4.tar.gz https://github.com/Unidata/netcdf-fortran/ar
 
 If anything goes wrong in this step you can check the `install_netcdf4.log` log file.
 
-#### 4.2. Create your custom 'arch.make' file for GCC + MPI build 
+#### 4.2. Download our custom 'arch.make' file for GCC + OpenMPI build 
 
 ```
 cd $SIESTA_DIR/siesta-4.1-b3/Obj
-wget -O arch.make https://raw.githubusercontent.com/bgeneto/siesta4.1-gnu-openmpi/master/gnu-openmpi-arch.make
+wget -O arch.make https://raw.githubusercontent.com/bgeneto/siesta-gcc-openmpi/master/gnu-openmpi-arch.make
 ```
 
 #### 4.3. Build siesta executable 
@@ -114,15 +114,35 @@ cd $SIESTA_DIR/siesta-4.1-b3/Obj
 sh ../Src/obj_setup.sh
 make OBJDIR=Obj
 ```
-## 5. Test siesta
 
-Choose some job to test, e.g.: 
+## 5. Revert permissions
 
 ```
+sudo chown -R root:root $SIESTA_DIR $OPENBLAS_DIR $SCALAPACK_DIR
+sudo chmod -R 755 $SIESTA_DIR $OPENBLAS_DIR $SCALAPACK_DIR
+```
 
-cd $SIESTA_DIR/siesta-4.1-b3
-ln -s ./Obj/siesta
-cd ./Tests/h2o_dos/
+## 6. Test siesta
+
+Let's copy siesta `Test` directory to our home (where we have all necessary permissions).
+
+```
+SIESTA_DIR=/opt/siesta
+mkdir $HOME/siesta/
+sudo cp -rp $SIESTA_DIR/siesta-4.1-b3/Tests/ $HOME/siesta/Tests/
+```
+
+Now create a symbolic link to siesta executable 
+
+```
+cd $HOME/siesta
+ln -s $SIESTA_DIR/siesta-4.1-b3/Obj/siesta
+```
+
+Finally run some test job:
+
+```
+cd $HOME/siesta/Tests/h2o_dos/
 make
 ```
 
@@ -132,7 +152,7 @@ We should see the following message at the end:
 ===> SIESTA finished successfully
 ```
 
-## 6. Make siesta available for all users
+## 7. Make siesta available for all users
 
 If you want to make siesta available to all users you can move the required directories to another location, say `/opt`, and set the required environmental variables system wide:
 
