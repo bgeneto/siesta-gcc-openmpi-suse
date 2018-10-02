@@ -156,8 +156,7 @@ We should see the following message at the end:
 If you want to make siesta available to all users you can move the required directories to another location, say `/opt`, and set the required environmental variables system wide:
 
 ```
-sudo cp -r $SIESTA_DIR $OPENBLAS_DIR $SCALAPACK_DIR /opt/
-echo "export PATH=$PATH:$openmpi/bin" | sudo tee --append /etc/profile.d/openmpi.sh > /dev/null
-echo "export export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$openmpipath/lib64" | sudo tee --append /etc/profile.d/openmpi.sh > /dev/null
-echo "export CPATH=$CPATH:$openmpipath/include" | sudo tee --append /etc/profile.d/openmpi.sh > /dev/null
+echo "export PATH=\$PATH:$openmpi/bin" | sudo tee --append /etc/profile.d/openmpi.sh > /dev/null
+echo "export export LD_LIBRARY_PATH=\$LD_LIBRARY_PATH:$openmpipath/lib64" | sudo tee --append /etc/profile.d/openmpi.sh > /dev/null
+echo "export CPATH=\$CPATH:$openmpipath/include" | sudo tee --append /etc/profile.d/openmpi.sh > /dev/null
 ```
