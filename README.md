@@ -160,3 +160,7 @@ echo "export PATH=\$PATH:$openmpi/bin" | sudo tee --append /etc/profile.d/openmp
 echo "export export LD_LIBRARY_PATH=\$LD_LIBRARY_PATH:$openmpipath/lib64" | sudo tee --append /etc/profile.d/openmpi.sh > /dev/null
 echo "export CPATH=\$CPATH:$openmpipath/include" | sudo tee --append /etc/profile.d/openmpi.sh > /dev/null
 ```
+
+## 8. Learning to use siesta
+
+Read the [manual](https://siesta-project.github.io/bsc2017/siesta-4.1.pdf).
