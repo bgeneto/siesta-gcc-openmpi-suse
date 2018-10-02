@@ -16,7 +16,7 @@ Unfortunetely, for SUSE, the openmpi installation does not work out of the box, 
 
 ```
 openmpipath=/usr/lib64/mpi/gcc/openmpi
-export PATH=$PATH:$openmpi/bin
+export PATH=$PATH:$openmpipath/bin
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$openmpipath/lib64
 export CPATH=$CPATH:$openmpipath/include
 ```
