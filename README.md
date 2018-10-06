@@ -48,7 +48,7 @@ In order to run siesta in parallel using MPI you need non-threaded blas and lapa
 
 #### 3.1. Install single-threaded openblas library from source
 
-*Note: apt installs a threaded version of openblas by default, I think this is not suitable for this MPI build of siesta.*
+*Note: zypper installs a threaded version of openblas by default, I think this is not suitable (performance-wise) for this MPI build of siesta.*
 
 ```
 cd $OPENBLAS_DIR
