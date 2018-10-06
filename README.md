@@ -98,6 +98,8 @@ wget https://support.hdfgroup.org/ftp/HDF5/releases/hdf5-1.8/hdf5-1.8.18/src/hdf
 wget -O netcdf-c-4.4.1.1.tar.gz https://github.com/Unidata/netcdf-c/archive/v4.4.1.1.tar.gz
 wget -O netcdf-fortran-4.4.4.tar.gz https://github.com/Unidata/netcdf-fortran/archive/v4.4.4.tar.gz
 (./install_netcdf4.bash 2>&1) | tee install_netcdf4.log
+cd $SIESTA_DIR/siesta-4.1-b3/Docs/build/netcdf/4.4.1.1 && ln -s lib64 lib
+cd $SIESTA_DIR/siesta-4.1-b3/Docs/build/hdf5/1.8.18 && ln -s lib64 lib
 ```
 
 If anything goes wrong in this step you can check the `install_netcdf4.log` log file.
